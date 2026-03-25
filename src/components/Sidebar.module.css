@@ -1,0 +1,97 @@
+.sidebar {
+  width: 220px;
+  background: var(--bg-sidebar);
+  color: var(--text-sidebar);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+.logo {
+  padding: 20px 18px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.logoIcon {
+  width: 28px;
+  height: 28px;
+  background: var(--accent);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 800;
+}
+.nav {
+  flex: 1;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-sidebar);
+  text-decoration: none;
+  transition: all 0.12s;
+}
+.navLink:hover {
+  background: var(--bg-sidebar-hover);
+  color: #fff;
+  text-decoration: none;
+}
+.navLinkActive {
+  background: var(--bg-sidebar-active);
+  color: var(--text-sidebar-active);
+}
+.navIcon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.7;
+}
+.navLinkActive .navIcon {
+  opacity: 1;
+}
+.footer {
+  padding: 14px 18px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 12px;
+}
+.userInfo {
+  color: var(--text-sidebar);
+  margin-bottom: 8px;
+}
+.userName {
+  font-weight: 600;
+  color: #fff;
+  font-size: 13px;
+}
+.userEmail {
+  font-size: 11px;
+  opacity: 0.6;
+}
+.logoutBtn {
+  font-size: 12px;
+  color: var(--text-sidebar);
+  opacity: 0.6;
+  padding: 0;
+}
+.logoutBtn:hover {
+  opacity: 1;
+  color: var(--red);
+}

@@ -1,0 +1,16 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+.content {
+  margin-left: 220px;
+  flex: 1;
+  padding: 28px 32px;
+  max-width: calc(100vw - 220px);
+}
+.pageTitle {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 24px;
+}

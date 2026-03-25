@@ -1,0 +1,211 @@
+.pageTitle {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.openCount {
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--blue-bg);
+  color: var(--blue);
+  border: 1px solid #93c5fd;
+  border-radius: 99px;
+  padding: 2px 8px;
+  min-width: 20px;
+  text-align: center;
+}
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Detail modal overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.detailModal {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg, 0 8px 30px rgba(0,0,0,0.12));
+  width: 640px;
+  max-width: 95vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.detailHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 24px 12px;
+  gap: 12px;
+}
+.detailTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+.detailMeta {
+  font-size: 12px;
+  color: var(--text-muted, #6b7280);
+  margin-top: 4px;
+}
+.closeBtn {
+  font-size: 16px;
+  color: var(--text-muted, #6b7280);
+  padding: 4px 8px;
+  border-radius: var(--radius);
+  border: none;
+  background: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.closeBtn:hover {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.detailBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 24px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.statusSelect {
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 12px;
+  background: var(--bg);
+  outline: none;
+  cursor: pointer;
+}
+.statusSelect:focus {
+  border-color: var(--accent);
+}
+
+.descriptionBox {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.descLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted, #6b7280);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+.descText {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text);
+  white-space: pre-wrap;
+}
+
+/* Replies */
+.repliesSection {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 320px;
+}
+.reply {
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-size: 13px;
+}
+.replyUser {
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+.replyAdmin {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+}
+.replyHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.replyAuthor {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.adminTag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 99px;
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+.replyTime {
+  font-size: 11px;
+  color: var(--text-muted, #6b7280);
+}
+.replyMessage {
+  color: var(--text);
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+/* Reply input */
+.replyBox {
+  padding: 12px 24px 16px;
+  border-top: 1px solid var(--border);
+}
+.replyInput {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 13px;
+  background: var(--bg);
+  outline: none;
+  resize: vertical;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.replyInput:focus {
+  border-color: var(--accent);
+}
+.sendBtn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.sendBtn:hover:not(:disabled) {
+  opacity: 0.85;
+}
+.sendBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
