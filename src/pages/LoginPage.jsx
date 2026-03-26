@@ -1,6 +1,24 @@
 import { getGoogleSigninUrl } from '../utils/api';
+import { useState, useEffect } from 'react';
+
+const ERROR_MESSAGES = {
+  no_account: 'No account found for this email.',
+  not_admin: 'This account does not have admin access.',
+  callback_failed: 'Authentication failed. Please try again.',
+};
 
 export default function LoginPage() {
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const authError = params.get('auth_error');
+    if (authError) {
+      setError(ERROR_MESSAGES[authError] || 'Login failed. Please try again.');
+      window.history.replaceState({}, '', '/login');
+    }
+  }, []);
+
   return (
     <div style={{
       display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -21,6 +39,14 @@ export default function LoginPage() {
         <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 28 }}>
           Platform management panel
         </p>
+        {error && (
+          <div style={{
+            background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 'var(--radius)',
+            padding: '10px 14px', marginBottom: 16, fontSize: 13, color: '#dc2626',
+          }}>
+            {error}
+          </div>
+        )}
         <a
           href={getGoogleSigninUrl()}
           style={{
