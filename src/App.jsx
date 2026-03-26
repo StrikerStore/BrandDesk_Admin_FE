@@ -38,12 +38,16 @@ export default function App() {
     fetchCurrentUser()
       .then(({ data }) => {
         if (data.role !== 'admin') {
+          console.error('[ADMIN] User role is not admin:', data.role);
           localStorage.removeItem('bd_admin_token');
           return;
         }
         setUser(data);
       })
-      .catch(() => localStorage.removeItem('bd_admin_token'))
+      .catch((err) => {
+        console.error('[ADMIN] fetchCurrentUser failed:', err.response?.status, err.response?.data || err.message);
+        localStorage.removeItem('bd_admin_token');
+      })
       .finally(() => setLoading(false));
   }, []);
 
