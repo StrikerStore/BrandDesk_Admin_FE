@@ -34,6 +34,7 @@ export const changeWorkspacePlan = (id, d)  => api.patch(`/api/admin/workspaces/
 export const fetchUsers       = (params) => api.get('/api/admin/users', { params });
 export const deactivateUser   = (id)     => api.patch(`/api/admin/users/${id}/deactivate`);
 export const reactivateUser   = (id)     => api.patch(`/api/admin/users/${id}/reactivate`);
+export const deleteUser       = (id)     => api.delete(`/api/admin/users/${id}`);
 
 // ── Subscriptions ──
 export const fetchSubscriptions = (params) => api.get('/api/admin/subscriptions', { params });

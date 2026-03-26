@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchUsers, deactivateUser, reactivateUser } from '../utils/api';
+import { fetchUsers, deactivateUser, reactivateUser, deleteUser } from '../utils/api';
 import DataTable, { tableStyles } from '../components/DataTable';
 import StatusBadge from '../components/StatusBadge';
 import styles from './UsersPage.module.css';
@@ -51,6 +51,20 @@ export default function UsersPage() {
     });
   };
 
+  const handleDelete = (e, user) => {
+    e.stopPropagation();
+    setConfirmModal({
+      title: '🗑️ Delete User',
+      message: `Permanently delete "${user.name}" (${user.email})? This will also remove them from all workspaces. This action cannot be undone.`,
+      danger: true,
+      btnLabel: 'Delete',
+      onConfirm: async () => {
+        await deleteUser(user.id);
+        load();
+      },
+    });
+  };
+
   const columns = [
     { key: 'name', label: 'Name', render: r => (
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -82,13 +96,19 @@ export default function UsersPage() {
     { key: 'role', label: 'Role', render: r => <StatusBadge status={r.role} small /> },
     { key: 'created_at', label: 'Created', render: r => new Date(r.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) },
     { key: 'status', label: 'Status', render: r => <StatusBadge status={r.is_active ? 'active' : 'expired'} small /> },
-    { key: 'actions', label: '', render: r => (
+    { key: 'actions', label: '', render: r => r.role === 'admin' ? null : (
       <div className={tableStyles.actions}>
         <button
           className={`${tableStyles.actionBtn} ${r.is_active ? tableStyles.actionBtnDanger : ''}`}
           onClick={e => handleToggle(e, r)}
         >
           {r.is_active ? 'Deactivate' : 'Reactivate'}
+        </button>
+        <button
+          className={`${tableStyles.actionBtn} ${tableStyles.actionBtnDanger}`}
+          onClick={e => handleDelete(e, r)}
+        >
+          Delete
         </button>
       </div>
     )},
