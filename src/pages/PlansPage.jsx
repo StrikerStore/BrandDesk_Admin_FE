@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchPlans, createPlan, updatePlan, deletePlan } from '../utils/api';
+import { fetchPlans, createPlan, updatePlan, deletePlan, fetchBillingConfig, updateBillingConfig } from '../utils/api';
 import DataTable, { tableStyles } from '../components/DataTable';
 import StatusBadge from '../components/StatusBadge';
 import styles from './PlansPage.module.css';
@@ -26,6 +26,36 @@ export default function PlansPage() {
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
+
+  // Billing config state
+  const [billingCfg, setBillingCfg] = useState({ gst_number: '', gst_percent: 18, company_name: 'BrandDesk', company_address: '' });
+  const [cfgSaving, setCfgSaving] = useState(false);
+  const [cfgMsg, setCfgMsg] = useState('');
+
+  useEffect(() => {
+    fetchBillingConfig()
+      .then(r => setBillingCfg({
+        gst_number: r.data.gst_number || '',
+        gst_percent: r.data.gst_percent ?? 18,
+        company_name: r.data.company_name || 'BrandDesk',
+        company_address: r.data.company_address || '',
+      }))
+      .catch(() => {});
+  }, []);
+
+  const handleSaveBillingConfig = async () => {
+    setCfgSaving(true);
+    setCfgMsg('');
+    try {
+      await updateBillingConfig(billingCfg);
+      setCfgMsg('Saved!');
+      setTimeout(() => setCfgMsg(''), 2000);
+    } catch (err) {
+      setCfgMsg('Failed to save');
+    } finally {
+      setCfgSaving(false);
+    }
+  };
 
   const load = useCallback(() => {
     setLoading(true);
@@ -162,6 +192,37 @@ export default function PlansPage() {
 
   return (
     <div>
+      {/* ── GST / Billing Config ── */}
+      <div style={{ marginBottom: 28, border: '1px solid var(--border)', borderRadius: 'var(--radius-lg, 10px)', padding: 20, background: 'var(--bg-card)' }}>
+        <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 14 }}>Billing &amp; GST Configuration</div>
+        <div className={styles.formRow}>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Company Name</label>
+            <input className={styles.formInput} value={billingCfg.company_name} onChange={e => setBillingCfg(p => ({ ...p, company_name: e.target.value }))} />
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>GST Number</label>
+            <input className={styles.formInput} value={billingCfg.gst_number} onChange={e => setBillingCfg(p => ({ ...p, gst_number: e.target.value }))} placeholder="e.g. 27AABCU9603R1ZM" />
+          </div>
+        </div>
+        <div className={styles.formRow}>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>GST Percentage (%)</label>
+            <input className={styles.formInput} type="number" min="0" max="100" step="0.01" value={billingCfg.gst_percent} onChange={e => setBillingCfg(p => ({ ...p, gst_percent: parseFloat(e.target.value) || 0 }))} style={{ width: 100 }} />
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Company Address</label>
+            <input className={styles.formInput} value={billingCfg.company_address} onChange={e => setBillingCfg(p => ({ ...p, company_address: e.target.value }))} placeholder="Full address for invoices" />
+          </div>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 4 }}>
+          <button className={styles.saveBtn} onClick={handleSaveBillingConfig} disabled={cfgSaving}>
+            {cfgSaving ? 'Saving…' : 'Save Config'}
+          </button>
+          {cfgMsg && <span style={{ fontSize: 12, color: cfgMsg === 'Saved!' ? '#16a34a' : '#dc2626' }}>{cfgMsg}</span>}
+        </div>
+      </div>
+
       <div className={styles.headerRow}>
         <h1 className={styles.pageTitle} style={{ marginBottom: 0 }}>Plans</h1>
         <button className={styles.createBtn} onClick={openCreate}>+ Create Plan</button>

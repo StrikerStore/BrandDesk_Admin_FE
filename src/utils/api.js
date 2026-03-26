@@ -44,6 +44,13 @@ export const cancelSubscription = (id)     => api.patch(`/api/admin/subscription
 
 // ── Transactions ──
 export const fetchTransactions = (params) => api.get('/api/admin/transactions', { params });
+export const fetchTransactionInvoice = (txnId) => api.get(`/api/admin/transactions/${txnId}/invoice`);
+export const exportTransactionsCSV = (params) =>
+  api.get('/api/admin/transactions/export', { params, responseType: 'blob' });
+
+// ── Billing Config ──
+export const fetchBillingConfig  = () => api.get('/api/admin/billing-config');
+export const updateBillingConfig = (data) => api.patch('/api/admin/billing-config', data);
 
 // ── Coupons ──
 export const fetchCoupons  = (params)   => api.get('/api/admin/coupons', { params });
