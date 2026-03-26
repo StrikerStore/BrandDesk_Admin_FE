@@ -139,6 +139,7 @@ export default function UsersPage() {
           <select className={tableStyles.filterSelect} value={roleFilter} onChange={e => { setRoleFilter(e.target.value); setPage(1); }}>
             <option value="">All roles</option>
             <option value="admin">Admin</option>
+            <option value="owner">Owner</option>
             <option value="agent">Agent</option>
           </select>
           <select className={tableStyles.filterSelect} value={statusFilter} onChange={e => { setStatusFilter(e.target.value); setPage(1); }}>
